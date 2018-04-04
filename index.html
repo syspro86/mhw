@@ -7,7 +7,10 @@
 </head>
 <body ng-app="MHWApp" ng-controller="MHWController" ng-cloak>
 <md-content class="md-padding autocomplete" layout="column">
-    몬스터 검색
+    <div layout="row">
+        <span flex>몬스터 검색</span>
+        <md-button ng-click="clearSelMonsters()">초기화</md-button>
+    </div>
     <md-chips ng-model="selMonsters" md-autocomplete-snap="width" md-require-match="true" md-on-add="selMonstersAdded()" md-on-remove="selMonstersChanged()">
         <md-autocomplete md-selected-item="selectedMonster" md-search-text="searchText"
             md-items="item in searchMonster(searchText)" md-item-text="item.name" md-autoselect="true">
@@ -120,6 +123,10 @@ function MHWController($scope, $http) {
         }
     }
 
+    $scope.clearSelMonsters = function() {
+        $scope.selMonsters = []
+    }
+    
     $scope.selMonstersAdded = function() {
         $scope.searchText = ''
         $scope.selMonstersChanged()
