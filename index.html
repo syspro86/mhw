@@ -24,13 +24,15 @@
     <div layout="row">
         <table flex>
             <thead style="font-weight: bold">
-                <td>몬스터</td>
-                <td ng-repeat="key in keys">{{key}}</td>
+                <td style="text-align: center">몬스터</td>
+                <td ng-repeat="src in images" style="text-align: center">
+                    <img ng-src="images/{{src}}.png" width="20" height="20">
+                </td>
             </thead>
             <tbody>
                 <tr ng-repeat="(index, monster) in selMonsters track by $index">
-                    <td>{{monster.name}}</td>
-                    <td ng-repeat="(windex, weak) in monster.weakness track by $index">{{weak}}</td>
+                    <td style="text-align: center">{{monster.name}}</td>
+                    <td ng-repeat="(windex, weak) in monster.weakness track by $index" style="text-align: center">{{weak}}</td>
                 </tr>
             </tbody>
         </table>
@@ -52,6 +54,7 @@ var app = angular.module('MHWApp', ['ngMaterial', 'ngMessages'])
 app.controller('MHWController', MHWController)
 
 function MHWController($scope, $http) {
+    $scope.images = 'fire,water,thunder,ice,dragon,poison,sleep,paralysis,blast,stun' .split(',')
     $scope.keys = /*난이도그룹,이름,*/ '불,물,번개,얼음,용,독,수면,마비,폭파,기절' .split(',')
     $scope.monsters = [
         '3,도스쟈그라스,3,0,2,2,1,3,3,3,3,3',
@@ -149,6 +152,7 @@ function MHWController($scope, $http) {
             scores.splice(index, 1)
             
             $scope.keys.push($scope.keys.splice(index, 1)[0])
+            $scope.images.push($scope.images.splice(index, 1)[0])
             $scope.monsters.forEach(function(monster) {
                 monster.weakness.push(monster.weakness.splice(index, 1)[0])
             })
